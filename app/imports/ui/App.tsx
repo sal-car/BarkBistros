@@ -2,7 +2,7 @@ import React from 'react';
 import { ViewRestaurants } from './containers/ViewRestaurants';
 
 export const App = () => (
-  <div>
+  <div className="App ">
     <ViewRestaurants />
   </div>
 );

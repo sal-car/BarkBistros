@@ -2,7 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  padding: 10px;
-  font-family: sans-serif;
+body, html {
+  background-color: #292433;
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.App {
+  height: 100vh;
+  width: 100vw;
 }
