@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  h1,label {
+    @apply text-salt 
+  }
+}
+
 body, html {
   background-color: #292433;
   height: 100%;
@@ -14,3 +20,4 @@ body, html {
   height: 100vh;
   width: 100vw;
 }
+
