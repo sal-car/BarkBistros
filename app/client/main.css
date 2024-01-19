@@ -6,6 +6,9 @@
   h1,label {
     @apply text-salt 
   }
+  body {
+    @apply bg-aubergine !important
+  }
 }
 
 body, html {
