@@ -1,9 +1,9 @@
 import React from 'react';
-import { TextField, Switch, FormControlLabel } from '@mui/material';
+import { TextField, Switch, FormControlLabel, Typography } from '@mui/material';
 
 export const SearchForm = () => (
-  <form className="flex flex-col gap-5 items-center">
-    <div className="w-[80vw]">
+  <form className="flex gap-5 justify-between md:justify-around">
+    <div className="self-start min-w-[40vw] sm:min-w-[60vw] md:min-w-[75vw]">
       <TextField
         label="Name or keyword"
         type="text"
@@ -12,6 +12,10 @@ export const SearchForm = () => (
         fullWidth
       />
     </div>
-    <FormControlLabel control={<Switch name="open-now" />} label="Open now" />{' '}
+    <FormControlLabel
+      className="self-end min-w-2"
+      control={<Switch name="open-now" />}
+      label={<Typography className="min-w-fit">Open now</Typography>}
+    />
   </form>
 );
