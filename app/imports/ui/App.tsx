@@ -1,7 +1,8 @@
 import React from 'react';
-import { ViewRestaurants } from './containers/ViewRestaurants';
+import { Main } from './containers/Main';
 import { CssBaseline } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Header } from './containers/Header';
 
 const theme = createTheme({
   palette: {
@@ -15,8 +16,7 @@ const theme = createTheme({
 export const App = () => (
   <ThemeProvider theme={theme}>
     <CssBaseline />
-    <div className="App  ">
-      <ViewRestaurants />
-    </div>
+    <Header />
+    <Main />
   </ThemeProvider>
 );
