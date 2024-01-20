@@ -6,13 +6,13 @@
   h1,label {
     @apply text-salt 
   }
-  body {
-    @apply bg-aubergine !important
+  body, html {
+    @apply bg-dark-sky !important
   }
 }
 
 body, html {
-  background-color: #292433;
+  /* background-color: #292433; */
   height: 100%;
   width: 100%;
   padding: 0;
@@ -20,7 +20,7 @@ body, html {
 }
 
 .App {
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
 }
 
