@@ -15,6 +15,9 @@ module.exports = {
         'lemon': '#FFC720',
         'cilantro': '#3A8D5C',
         'salt': '#FAFAFB'
+      },
+      fontFamily: {
+        logo: ['Urbanist', 'system-ui']
       }
     },
   },
