@@ -1,3 +1,6 @@
+// Create Mongo collection Restaurants
+
+/* 
 import { Mongo } from 'meteor/mongo';
 
 export interface Link {
@@ -8,3 +11,6 @@ export interface Link {
 }
 
 export const LinksCollection = new Mongo.Collection<Link>('links');
+
+
+*/

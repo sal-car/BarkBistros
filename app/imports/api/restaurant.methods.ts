@@ -1,0 +1,1 @@
+// Method to validate & insert data into Restaurants collection

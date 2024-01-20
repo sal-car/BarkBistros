@@ -1,0 +1,1 @@
+// Declare interface Restaurant

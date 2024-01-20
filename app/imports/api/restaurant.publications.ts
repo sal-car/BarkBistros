@@ -1,0 +1,1 @@
+// Method to get records from Restaurants collection and publish it
