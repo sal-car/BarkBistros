@@ -1,12 +1,16 @@
 import { Meteor } from 'meteor/meteor';
+import { loadFixtures } from '/imports/startup/loadFixtures';
+import { RestaurantCollection } from '/imports/api/restaurant.collection';
+import { runPublications } from '/imports/startup/runPublications';
 
 // SERVER ENTRY POINT
 
 Meteor.startup(async () => {
-  //TODO: RUN THE FIXTURES
-    // i.e. prepopulate the db
+  // Prepopulate the db
+  if (RestaurantCollection.find().count() === 0) {
+    loadFixtures();
+  }
 
-  // TODO: RUN THE PUBLICATIONS
-    // i.e. make data available to client
-
+  // Make data available to client
+  // runPublications();
 });
