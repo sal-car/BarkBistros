@@ -3,7 +3,7 @@ export const data = [
       name: "Paws & Plates",
       address: "123 Woof Street, Barcino",
       tags: ["Outdoor Seating", "Café"],
-      creation_date: "2023-03-15T12:30:00Z",
+      creation_date: new Date("2023-03-15T12:30:00Z"),
       opening_hours: {
         monday: "09:00-18:00",
         tuesday: "09:00-18:00",
@@ -18,7 +18,7 @@ export const data = [
       name: "Bark & Bites",
       address: "789 Wag Avenue, Barcino",
       tags: ["Garden", "Restaurant"],
-      creation_date: "2022-08-20T14:45:00Z",
+      creation_date: new Date("2022-08-20T14:45:00Z"),
       opening_hours: {
         monday: "12:00-22:00",
         tuesday: "12:00-22:00",
@@ -33,7 +33,7 @@ export const data = [
       name: "Puppy Patio",
       address: "456 Tail Lane, Barcino",
       tags: ["Terrace", "Bar"],
-      creation_date: "2023-01-10T10:15:00Z",
+      creation_date: new Date("2023-01-10T10:15:00Z"),
       opening_hours: {
         monday: "10:00-20:00",
         tuesday: "10:00-20:00",
@@ -48,7 +48,7 @@ export const data = [
       name: "Canine Corner Café",
       address: "987 Sniff Road, Barcino",
       tags: ["Café", "Brunch"],
-      creation_date: "2022-05-05T09:30:00Z",
+      creation_date: new Date("2022-05-05T09:30:00Z"),
       opening_hours: {
         monday: "08:00-17:00",
         tuesday: "08:00-17:00",
@@ -63,7 +63,7 @@ export const data = [
       name: "Woof n' Dine",
       address: "234 Paw Plaza, Barcino",
       tags: ["Restaurant", "Lunch"],
-      creation_date: "2023-11-28T16:20:00Z",
+      creation_date: new Date("2023-11-28T16:20:00Z"),
       opening_hours: {
         monday: "11:30-15:30",
         tuesday: "11:30-15:30",
@@ -78,7 +78,7 @@ export const data = [
       name: "Tail Wag Tavern",
       address: "543 Bark Lane, Barcino",
       tags: ["Pub", "Evening"],
-      creation_date: "2022-10-15T18:00:00Z",
+      creation_date: new Date("2022-10-15T18:00:00Z"),
       opening_hours: {
         monday: "16:00-23:00",
         tuesday: "16:00-23:00",
@@ -93,7 +93,7 @@ export const data = [
       name: "BowWow Bistro",
       address: "876 Lick Street, Barcino",
       tags: ["Gourmet", "Dinner"],
-      creation_date: "2023-07-07T20:10:00Z",
+      creation_date: new Date("2023-07-07T20:10:00Z"),
       opening_hours: {
         monday: "18:00-22:00",
         tuesday: "18:00-22:00",
@@ -108,7 +108,7 @@ export const data = [
       name: "Snout & Sip Lounge",
       address: "345 Sniff Boulevard, Barcino",
       tags: ["Lounge", "Cocktails"],
-      creation_date: "2022-04-02T19:45:00Z",
+      creation_date: new Date("2022-04-02T19:45:00Z"),
       opening_hours: {
         monday: "17:00-01:00",
         tuesday: "17:00-01:00",
