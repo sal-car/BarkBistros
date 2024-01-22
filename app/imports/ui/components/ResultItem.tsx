@@ -13,13 +13,19 @@ import {
   Box,
 } from '@mui/material';
 import CircleIcon from '@mui/icons-material/Circle';
+import { getCurrentHourAndDay, isOpen } from '/imports/utils/filterRestaurants';
 
 type Props = {
-  item: { name: string; address: string; tags: string[] };
+  item: Restaurant;
   cardView: boolean;
 };
 
 export const ResultItem = ({ item, cardView }: Props) => {
+  const venueIsOpen = () => {
+    const { day, hour } = getCurrentHourAndDay();
+    return isOpen(hour, item.opening_hours[day]);
+  };
+
   return (
     <>
       {(cardView && (
@@ -65,8 +71,12 @@ export const ResultItem = ({ item, cardView }: Props) => {
             <Avatar src="https://cdnb.20m.es/sites/76/2021/07/El-curioso-origen-detr%C3%A1s-del-nombre-de-famosas-marcas-Starbucks.jpg" />
           </ListItemAvatar>
           <ListItemText primary={item.name} secondary={item.address} />
-          <Chip className="ml-1 mr-2" label={item.tags[0]} />
-          <CircleIcon color="error" />
+          <Chip
+            className="ml-1 mr-2"
+            sx={{ maxWidth: 80 }}
+            label={item.tags[0]}
+          />
+          <CircleIcon color={venueIsOpen() ? 'success' : 'error'} />
         </ListItemButton>
       )}
     </>
