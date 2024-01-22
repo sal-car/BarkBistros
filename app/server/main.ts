@@ -12,5 +12,5 @@ Meteor.startup(async () => {
   }
 
   // Make data available to client
-  // runPublications();
+  runPublications();
 });
