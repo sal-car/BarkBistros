@@ -72,7 +72,7 @@ export const Main = () => {
       {isLoading ? (
         <Loading />
       ) : (
-        showingResults.length === 0 && <NoResults /> && (
+        (showingResults.length === 0 && <NoResults />) || (
           <ResultList results={showingResults} />
         )
       )}
