@@ -7,7 +7,7 @@ Will match name, address & tags.
 export const filterBySearch = (
   restaurants: Restaurant[],
   searchTerm: string
-): Restaurant[] => {
+): Restaurant[] | [] => {
   if (!searchTerm) return restaurants;
 
   const normalizedSearchTerm = searchTerm.toLowerCase();
@@ -28,13 +28,17 @@ export const filterBySearch = (
 Filters restaurants based on opening hours.
 Will match restaurants that are open now (at runtime). 
 */
-export const filterByOpenNow = (restaurants: Restaurant[]) => {
+export const filterByOpenNow = (
+  restaurants: Restaurant[]
+): Restaurant[] | [] => {
   const { day, hour } = getCurrentHourAndDay();
 
-  return restaurants.filter((restaurant) => {
+  const restaurantsOpenNow = restaurants.filter((restaurant) => {
     const openingHours = restaurant.opening_hours as OpeningHours;
     return isOpen(hour, openingHours[day]);
   });
+
+  return restaurantsOpenNow.length >= 1 ? restaurantsOpenNow : [];
 };
 
 /* 
@@ -66,8 +70,13 @@ Checks if thisHour is in range of openingHours.
   returns true 
 */
 export const isOpen = (thisHour: number, openingHours: string) => {
-  const { startHour, endHour } = extractStartAndEndHours(openingHours);
-  return startHour <= thisHour && thisHour < endHour;
+  try {
+    const { startHour, endHour } = extractStartAndEndHours(openingHours);
+    return !!(startHour <= thisHour && thisHour < endHour);
+  } catch (error) {
+    console.error(`Error in isOpen: ${error}`);
+    return false;
+  }
 };
 
 /* 
@@ -76,7 +85,16 @@ Extracts the start and end hour of string with format "HH:MM-HH:MM" as numbers.
   times = '10:00-19:00'
   returns {startHour: 10, endHour: 19}
 */
-const extractStartAndEndHours = (times: string) => {
+export const extractStartAndEndHours = (times: string) => {
+  const validInput = new RegExp(
+    '^(?:[0-1]\\d|[2][0-4])[:][0-6][0-9][-](?:[0-1]\\d|[2][0-4])[:][0-6][0-9]'
+  );
+
+  if (validInput.test(times) === false)
+    throw new Error(
+      `Error parsing string, input is not valid HH:MM-HH:MM format`
+    );
+
   const [startHour, endHour] = times
     .split('-')
     .map((time) => parseInt(time.split(':')[0]));
