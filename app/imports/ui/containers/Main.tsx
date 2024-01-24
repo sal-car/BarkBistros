@@ -26,7 +26,9 @@ export const Main = () => {
 
     const restaurants = RestaurantCollection.find({}).fetch();
 
-    return { restaurants, isLoading: false };
+    return restaurants.length <= 1
+      ? { restaurants: [], isLoading: false }
+      : { restaurants, isLoading: false };
   });
 
   // Set showing results to restaurants when subscription handler is ready.

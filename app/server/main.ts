@@ -6,11 +6,13 @@ import { runPublications } from '/imports/startup/runPublications';
 // SERVER ENTRY POINT
 
 Meteor.startup(async () => {
-  // Prepopulate the db
   if (RestaurantCollection.find().count() === 0) {
-    loadFixtures();
-  }
+    // Prepopulate the db
+    const result = loadFixtures();
 
-  // Make data available to client
-  runPublications();
+    if (result.success) {
+      // Make data available to client
+      runPublications();
+    }
+  }
 });
