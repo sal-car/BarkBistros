@@ -1,9 +1,11 @@
-// TODO: make into JSDoc comments
-
-/* 
-Filters restaurants by given search term.
-Will match name, address & tags.
-*/
+/**
+ * Filters restaurants by given search term.
+ * Will match name, address & tags.
+ *
+ * @param {Restaurant[]} restaurants - Array of restaurants to filter.
+ * @param {string} searchTerm - Search term to filter restaurants.
+ * @returns {Restaurant[] | []} - Filtered array of restaurants or an empty array.
+ */
 export const filterBySearch = (
   restaurants: Restaurant[],
   searchTerm: string
@@ -24,10 +26,13 @@ export const filterBySearch = (
   });
 };
 
-/*
-Filters restaurants based on opening hours.
-Will match restaurants that are open now (at runtime). 
-*/
+/**
+ * Filters restaurants based on opening hours.
+ * Will match restaurants that are open now (at runtime).
+ *
+ * @param {Restaurant[]} restaurants - Array of restaurants to filter.
+ * @returns {Restaurant[] | []} - Filtered array of restaurants or an empty array.
+ */
 export const filterByOpenNow = (
   restaurants: Restaurant[]
 ): Restaurant[] | [] => {
@@ -41,11 +46,12 @@ export const filterByOpenNow = (
   return restaurantsOpenNow.length >= 1 ? restaurantsOpenNow : [];
 };
 
-/* 
-Gets current weekday and hour in 24-hour format.
-  Example: on Monday 1PM,
-  returns {day: monday, hour: 13} 
-*/
+/**
+ * Gets current weekday and hour in 24-hour format.
+ * Example: on Monday 1PM, returns {day: monday, hour: 13}
+ *
+ * @returns {{day: string, hour: number}} - Object containing current weekday and hour.
+ */
 export const getCurrentHourAndDay = () => {
   const daysOfTheWeek: { [key: number]: string } = {
     0: 'sunday',
@@ -62,13 +68,14 @@ export const getCurrentHourAndDay = () => {
   return { day, hour };
 };
 
-/* 
-Checks if thisHour is in range of openingHours.
-  Example:
-  thisHour = 11
-  openingHours = '10:00-19:00'
-  returns true 
-*/
+/**
+ * Checks if thisHour is in range of openingHours.
+ * Example: thisHour = 11, openingHours = '10:00-19:00', returns true
+ *
+ * @param {number} thisHour - Current hour to check.
+ * @param {string} openingHours - String representation of opening hours.
+ * @returns {boolean} - True if the restaurant is open at the current hour, false otherwise.
+ */
 export const isOpen = (thisHour: number, openingHours: string) => {
   try {
     const { startHour, endHour } = extractStartAndEndHours(openingHours);
@@ -79,12 +86,14 @@ export const isOpen = (thisHour: number, openingHours: string) => {
   }
 };
 
-/* 
-Extracts the start and end hour of string with format "HH:MM-HH:MM" as numbers.
-  Example:
-  times = '10:00-19:00'
-  returns {startHour: 10, endHour: 19}
-*/
+/**
+ * Extracts the start and end hour of a string with format "HH:MM-HH:MM" as numbers.
+ * Example: times = '10:00-19:00', returns {startHour: 10, endHour: 19}
+ *
+ * @param {string} times - String representing the opening hours.
+ * @returns {{startHour: number, endHour: number}} - Object containing start and end hours.
+ * @throws {Error} - Throws an error if the input string is not in valid HH:MM-HH:MM format.
+ */
 export const extractStartAndEndHours = (times: string) => {
   const validInput = new RegExp(
     '^(?:[0-1]\\d|[2][0-4])[:][0-6][0-9][-](?:[0-1]\\d|[2][0-4])[:][0-6][0-9]'
