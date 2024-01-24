@@ -8,9 +8,10 @@ A simple Meteor project written in TypeScript and React that puts together a lis
 
 ### Features
 
--📱 Mobile-first UI approach with Material and Tailwind
--🌐 Responsive design
--🔲 Choose between list- and grid-view for a seamless user experience
+git pu
+-📱 Mobile-first UI approach with Material and Tailwind  
+-🌐 Responsive design  
+-🔲 Choose between list- and grid-view for a seamless user experience  
 -🔄 Single-page application - no loading times!
 
 ## Getting Started
