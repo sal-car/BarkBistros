@@ -11,7 +11,7 @@ export const ResultList = ({ results }: Props) => {
   const [cardView, setCardView] = useState(false);
 
   return (
-    <Box className="flex-col flex">
+    <Box data-cy="result-list" className="flex-col flex">
       <ViewButton
         className="self-end md:mx-8 "
         cardView={cardView}
