@@ -1,5 +1,8 @@
 // Utility functions for filtering restaurants by time and search term
-import '../imports/tests/utils/filterRestaurants.test';
+import './utils/filterRestaurants.test';
 
 // Methods for populating the DB
-import '../imports/tests/api/methods.test';
+import './api/methods.test';
+
+// Loading fixtures on startup
+import './startup/loadFixtures.test';

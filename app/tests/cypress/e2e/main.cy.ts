@@ -1,4 +1,4 @@
-import { data } from 'server/db/fixtures';
+import { data } from '/db/fixtures';
 
 describe('Rendering of UI', () => {
   beforeEach(() => {

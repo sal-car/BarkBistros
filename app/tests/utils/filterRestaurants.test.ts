@@ -6,7 +6,7 @@ import {
   getCurrentHourAndDay,
   isOpen,
 } from '/imports/utils/filterRestaurants';
-import { mock } from '../../../tests/mockFactory';
+import { mock } from '../mockFactory';
 
 describe('extractStartAndEndHours', function () {
   it('correctly extracts start hour and end hour from a valid string', function () {
