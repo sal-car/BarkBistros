@@ -29,7 +29,7 @@ export const ResultItem = ({ item, cardView }: Props) => {
   return (
     <>
       {(cardView && (
-        <Grid item xs={6} md={4} lg={2}>
+        <Grid data-cy={'result-item'} item xs={6} md={4} lg={2}>
           <Card
             sx={{
               height: '100%',
@@ -66,7 +66,7 @@ export const ResultItem = ({ item, cardView }: Props) => {
           </Card>
         </Grid>
       )) || (
-        <ListItemButton>
+        <ListItemButton data-cy={'result-item'}>
           <ListItemAvatar>
             <Avatar src="https://cdnb.20m.es/sites/76/2021/07/El-curioso-origen-detr%C3%A1s-del-nombre-de-famosas-marcas-Starbucks.jpg" />
           </ListItemAvatar>

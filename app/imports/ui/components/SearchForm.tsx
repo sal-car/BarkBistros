@@ -22,9 +22,13 @@ export const SearchForm = ({
   openNow,
   setOpenNow,
 }: Props) => (
-  <form className="flex gap-5 justify-between md:justify-around">
+  <form
+    data-cy={'search-form'}
+    className="flex gap-5 justify-between md:justify-around"
+  >
     <Box className="self-start min-w-[40vw] sm:min-w-[60vw] md:min-w-[75vw]">
       <TextField
+        data-cy={'search-input'}
         value={input}
         onChange={(e) => handleChange(e)}
         label="Name or keyword"

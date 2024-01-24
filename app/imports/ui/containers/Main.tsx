@@ -60,7 +60,7 @@ export const Main = () => {
   };
 
   return (
-    <Box className="flex-col flex gap-3 md:gap-8">
+    <Box data-cy="main" className="flex-col flex gap-3 md:gap-8">
       <Box className="px-4">
         <SearchForm
           openNow={openNowSearch}
