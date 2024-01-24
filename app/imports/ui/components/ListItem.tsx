@@ -24,7 +24,7 @@ export function ListItem({ name, img, address, tags, open }: Props) {
   return (
     <ListItemButton data-cy={'result-item'}>
       <ListItemAvatar>
-        <Avatar src={`${img}.jpg`} />
+        <Avatar src={`${img}.jpg`} alt={`picture of restaurant ${name}`} />
       </ListItemAvatar>
       <ListItemText
         primaryTypographyProps={{ fontSize: { xs: 'medium', sm: 'large' } }}

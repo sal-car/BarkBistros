@@ -8,6 +8,7 @@ import {
   Box,
   Chip,
 } from '@mui/material';
+import { NearMe } from '@mui/icons-material';
 
 type Props = {
   name: string;
@@ -31,6 +32,7 @@ export function GridItem({ name, img, address, tags }: Props) {
           component="img"
           sx={{ minHeight: 180, width: '100%', objectFit: 'cover' }}
           src={`${img}.jpg`}
+          alt={`picture of restaurant ${name}`}
         ></CardMedia>
         <CardContent
           sx={{
