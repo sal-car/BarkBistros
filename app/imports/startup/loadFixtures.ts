@@ -1,11 +1,13 @@
-// Prepopulate DB using methods defined in imports/api/restaurant.methods.ts
-// && data defined in imports/server/db/fixtures
 import { insertRestaurant } from '../api/restaurant.methods';
-import { data } from '/server/db/fixtures';
 
-export function loadFixtures() {
+/** 
+ * @function loadFixtures
+ * @param {Restaurant[]} data - an array of restaurant objects 
+ * @returns {object}
+
+*/ export function loadFixtures(data?: Restaurant[]) {
   try {
-    if (data.length > 1) {
+    if (data && data.length > 0) {
       data.forEach((item) => {
         insertRestaurant(item);
       });
