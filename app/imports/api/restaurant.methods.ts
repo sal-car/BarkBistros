@@ -1,4 +1,4 @@
-import { Restaurant } from '/server/db/schemas';
+import { Restaurant } from '/db/schemas';
 import { RestaurantCollection } from './restaurant.collection';
 
 /**
