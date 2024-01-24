@@ -2,7 +2,7 @@ import React from 'react';
 import { Main } from './containers/Main';
 import { CssBaseline } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Header } from './containers/Header';
+import { Header } from './components/Header';
 
 const theme = createTheme({
   palette: {

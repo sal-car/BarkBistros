@@ -9,7 +9,7 @@ type Props = {
   className: string;
 };
 
-export const ViewButton = ({ onClick, cardView, className }: Props) => (
+export const ToggleView = ({ onClick, cardView, className }: Props) => (
   <IconButton className={className} onClick={onClick}>
     {cardView ? <ViewListIcon /> : <ViewModuleIcon />}
   </IconButton>
