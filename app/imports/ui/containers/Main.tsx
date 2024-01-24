@@ -1,24 +1,28 @@
 import { Meteor } from 'meteor/meteor';
 import React, { useEffect, useState } from 'react';
 import { useTracker } from 'meteor/react-meteor-data';
+import { ErrorBoundary } from 'react-error-boundary';
 import { Box } from '@mui/material';
 import { RestaurantCollection } from '/imports/api/restaurant.collection';
+import { filterBySearch, filterByOpenNow } from '../../utils/filterRestaurants';
 import { SearchForm } from '../components/SearchForm';
-import { ResultList } from '../components/ResultList';
 import { Loading } from '../components/Loading';
 import { NoResults } from '../components/NoResults';
-import { filterBySearch, filterByOpenNow } from '../../utils/filterRestaurants';
+import { Results } from './Results';
 
 export const Main = () => {
   const [showingResults, setShowingResults] = useState<Restaurant[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [openNowSearch, setOpenNowSearch] = useState<boolean>(false);
+  const [gridView, setGridView] = useState(false);
 
   // Subscription to restaurants collection.
-  // if subscription is loading, return empty dataset & isLoading = true,
-  // else return restaurants and isLoading = false.
   const { restaurants, isLoading } = useTracker(() => {
-    const handler = Meteor.subscribe('restaurants');
+    const handler = Meteor.subscribe('restaurants', {
+      onStop: (error: any) => {
+        console.log('Error in restaurant subscription: ', error);
+      },
+    });
 
     if (!handler.ready()) {
       return { restaurants: [], isLoading: true };
@@ -40,7 +44,7 @@ export const Main = () => {
   // set showing results to restaurants that are open now
   // else, set showingResults to current search term.
   useEffect(() => {
-    openNowSearch
+    restaurants.length > 0 && openNowSearch
       ? setShowingResults(filterByOpenNow(showingResults))
       : setShowingResults(filterBySearch(restaurants, searchTerm));
   }, [openNowSearch]);
@@ -62,22 +66,28 @@ export const Main = () => {
   };
 
   return (
-    <Box data-cy="main" className="flex-col flex gap-3 md:gap-8">
-      <Box className="px-4">
-        <SearchForm
-          openNow={openNowSearch}
-          setOpenNow={setOpenNowSearch}
-          input={searchTerm}
-          handleChange={searchRestaurants}
-        />
+    <ErrorBoundary fallback={<div>Something went wrong</div>}>
+      <Box data-cy="main" className="flex-col flex gap-3 md:gap-8">
+        <Box className="px-4">
+          <SearchForm
+            openNow={openNowSearch}
+            setOpenNow={setOpenNowSearch}
+            input={searchTerm}
+            handleChange={searchRestaurants}
+          />
+        </Box>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          (showingResults.length === 0 && <NoResults />) || (
+            <Results
+              gridView={gridView}
+              setGridView={setGridView}
+              results={showingResults}
+            />
+          )
+        )}
       </Box>
-      {isLoading ? (
-        <Loading />
-      ) : (
-        (showingResults.length === 0 && <NoResults />) || (
-          <ResultList results={showingResults} />
-        )
-      )}
-    </Box>
+    </ErrorBoundary>
   );
 };
