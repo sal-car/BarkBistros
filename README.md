@@ -1,15 +1,17 @@
-# BarkBistros
+# BarkBistros 🐕
 
-A simple Meteor project written in TypeScript and React that puts together a list of restaurants and shows them on your screen. You can then search for a restaurant by name, address, keyword or by checking if it's open 🍔🌟
+A simple Meteor project written in TypeScript and React that puts together a list of restaurants and shows them on your screen. You can then search for a restaurant by name, address, keyword or by checking if it's open! 🍔🌟
 
-Find the deployed version [HERE](https://barkbistros.meteorapp.com/)
+🚀 Find the deployed version [HERE!](https://barkbistros.meteorapp.com/)
+
+**Any bugs or issues, do let me know!**
 
 ### Features
 
--Mobile-fist UI approach with Material and Tailwind  
--Responsive design  
--Choose between list- and grid-view for seamless user experience  
--Single-page application - no loading times!
+-📱 Mobile-first UI approach with Material and Tailwind
+-🌐 Responsive design
+-🔲 Choose between list- and grid-view for a seamless user experience
+-🔄 Single-page application - no loading times!
 
 ## Getting Started
 
@@ -47,7 +49,7 @@ This will connect to the MongoDB Atlas Cluster (and which connection string I ha
 
 ### Unit/Integration tests
 
-The tests in tests/api, /startup and /utils run on Mocha through the meteor:mocha dricker package. To start them, run
+The tests in tests/api, /startup and /utils run on Mocha through the meteor:mocha driver package. To start them, run:
 
 ```bash
 npm run test
@@ -57,13 +59,13 @@ There is some basic testing for the method(s), publication(s) and the loading of
 
 ### End-to-end Testing
 
-The tests in tests/cypress are some basic UI testing for seeing that the elements render on the page and that the correct results appear when the user searches for a restaurant. To run it through the Cypress UI, run
+The tests in tests/cypress are some basic UI testing for seeing that the elements render on the page and that the correct results appear when the user searches for a restaurant. To run it through the Cypress UI, **first run the app using the meteor command above**, and then run:
 
 ```bash
 $ npm run cypress:ui
 ```
 
-or, if you prefer to see the tests in the console,
+or, if you prefer to see the tests in the console:
 
 ```bash
 $ npm run cypress:headless
