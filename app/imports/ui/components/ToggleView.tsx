@@ -6,11 +6,10 @@ import ViewModuleIcon from '@mui/icons-material/ViewModule';
 type Props = {
   onClick: () => void;
   cardView: boolean;
-  className: string;
 };
 
-export const ToggleView = ({ onClick, cardView, className }: Props) => (
-  <IconButton className={className} onClick={onClick}>
+export const ToggleView = ({ onClick, cardView }: Props) => (
+  <IconButton onClick={onClick}>
     {cardView ? <ViewListIcon /> : <ViewModuleIcon />}
   </IconButton>
 );
