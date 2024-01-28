@@ -1,48 +1,46 @@
 import React from 'react';
-import {
-  TextField,
-  Switch,
-  FormControlLabel,
-  Typography,
-  Box,
-} from '@mui/material';
+import { TextField, FormControl, Button } from '@mui/material';
 
 type Props = {
-  handleChange: (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => void;
+  setResultsBySearch: () => void;
   input: string;
-  openNow: boolean;
-  setOpenNow: (arg: boolean) => void;
+  setInput: (e: string) => void;
 };
 
-export const SearchForm = ({
-  handleChange,
-  input,
-  openNow,
-  setOpenNow,
-}: Props) => (
-  <form
+export const SearchForm = ({ setResultsBySearch, input, setInput }: Props) => (
+  <FormControl
+    sx={{
+      flexDirection: 'row',
+      gap: 5,
+      width: '100%',
+      px: '5%',
+      mb: 5,
+    }}
     data-cy={'search-form'}
-    className="flex gap-5 justify-between md:justify-around"
   >
-    <Box className="self-start min-w-[40vw] sm:min-w-[60vw] md:min-w-[75vw]">
-      <TextField
-        data-cy={'search-input'}
-        value={input}
-        onChange={(e) => handleChange(e)}
-        label="Name or keyword"
-        type="text"
-        variant="standard"
-        color="primary"
-        fullWidth
-      />
-    </Box>
-    <FormControlLabel
-      onChange={() => setOpenNow(!openNow)}
-      className="self-end min-w-2"
-      control={<Switch color="success" name="open-now" />}
-      label={<Typography className="min-w-fit">Open now</Typography>}
+    <TextField
+      sx={{ width: '100%' }}
+      data-cy={'search-input'}
+      value={input}
+      onChange={(e) => setInput(e.currentTarget.value)}
+      label="Name or keyword"
+      type="text"
+      variant="standard"
+      color="primary"
+      onKeyDown={(e) => e.key === 'Enter' && setResultsBySearch()}
+      fullWidth
     />
-  </form>
+    <Button
+      variant="contained"
+      sx={{
+        alignSelf: 'end',
+        width: { xs: '40%', sm: '40%' },
+        maxWidth: { xs: '40%', sm: 100 },
+      }}
+      color="secondary"
+      onClick={() => setResultsBySearch()}
+    >
+      Search
+    </Button>
+  </FormControl>
 );

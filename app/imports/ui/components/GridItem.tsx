@@ -8,7 +8,6 @@ import {
   Box,
   Chip,
 } from '@mui/material';
-import { NearMe } from '@mui/icons-material';
 
 type Props = {
   name: string;
@@ -19,10 +18,10 @@ type Props = {
 
 export function GridItem({ name, img, address, tags }: Props) {
   return (
-    <Grid item data-cy={'result-item'} xs={12} sm={6} md={4} lg={2}>
+    <Grid item data-cy={'result-item'} xs={12} sm={6} md={4} lg={3}>
       <Card
         sx={{
-          height: '100%',
+          height: { xs: 'fit', sm: '100%' },
           display: 'flex',
           justifyContent: 'space-between',
           flexDirection: 'column',
@@ -43,16 +42,10 @@ export function GridItem({ name, img, address, tags }: Props) {
           }}
         >
           <Box>
-            <Typography
-              sx={{ fontSize: { xs: 'medium', sm: 'large' } }}
-              className="text-salt "
-            >
+            <Typography sx={{ fontSize: { xs: 'medium', sm: 'large' } }}>
               {name}
             </Typography>
-            <Typography
-              sx={{ fontSize: { xs: '10px', sm: 'medium' } }}
-              className="text-salt/70 text-xs"
-            >
+            <Typography sx={{ fontSize: { xs: '10px', sm: 'medium' } }}>
               {address}
             </Typography>
           </Box>
