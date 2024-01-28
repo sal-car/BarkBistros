@@ -1,7 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import React, { useEffect, useState } from 'react';
 import { useTracker } from 'meteor/react-meteor-data';
-import { ErrorBoundary } from 'react-error-boundary';
 import { Box } from '@mui/material';
 import { RestaurantCollection } from '/imports/api/restaurant.collection';
 import { filterBySearch, filterByOpenNow } from '../../utils/filterRestaurants';
@@ -19,8 +18,10 @@ export const Main = () => {
   // Subscription to restaurants collection.
   const { restaurants, isLoading } = useTracker(() => {
     const handler = Meteor.subscribe('restaurants', {
-      onStop: (error: any) => {
-        console.log('Error in restaurant subscription: ', error);
+      onStop: (error: Error) => {
+        if (error) {
+          console.log('Error in restaurant subscription: ', error);
+        }
       },
     });
 
@@ -42,52 +43,66 @@ export const Main = () => {
 
   // If Open now-switch is toggled on,
   // set showing results to restaurants that are open now
-  // else, set showingResults to current search term.
+  // else, set showingResults to current search term or full list.
   useEffect(() => {
-    restaurants.length > 0 && openNowSearch
-      ? setShowingResults(filterByOpenNow(showingResults))
-      : setShowingResults(filterBySearch(restaurants, searchTerm));
+    if (openNowSearch) {
+      setShowingResults(filterByOpenNow(showingResults));
+    } else if (!openNowSearch && searchTerm != '') {
+      setShowingResults(filterBySearch(restaurants, searchTerm));
+    } else {
+      setShowingResults(restaurants);
+    }
   }, [openNowSearch]);
 
   /**
-   * Set showingResults state to the value in event's current target.
-   * @function searchRestaurants
-   * @param {React.ChangeEvent} event
+   * Ses showing results to current search term.
+   * @function setResultsBySearch
+   * @param {React.FormEvent<HTMLFormElement>} event
    * @returns void
    *  */
-  const searchRestaurants = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { value } = event.currentTarget;
-    setSearchTerm(value);
+  const setResultsBySearch = () => {
+    if (!searchTerm) setShowingResults(restaurants);
 
-    const searchResults = filterBySearch(restaurants, value);
-    setShowingResults(searchResults);
+    Meteor.call(
+      'restarants.search',
+      {
+        searchTerm: searchTerm,
+      },
+      (err: any, res: any) => {
+        if (err) alert(err.reason);
+        else res && setShowingResults(res);
+      }
+    );
   };
 
   return (
-    <ErrorBoundary fallback={<div>Something went wrong</div>}>
-      <Box data-cy="main" className="flex-col flex gap-3 md:gap-8">
-        <Box className="px-4">
-          <SearchForm
-            openNow={openNowSearch}
-            setOpenNow={setOpenNowSearch}
-            input={searchTerm}
-            handleChange={searchRestaurants}
+    <Box
+      data-cy="main"
+      sx={{
+        px: { md: '5%' },
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+      }}
+    >
+      <SearchForm
+        input={searchTerm}
+        setInput={setSearchTerm}
+        setResultsBySearch={setResultsBySearch}
+      />
+      {isLoading ? (
+        <Loading />
+      ) : (
+        (showingResults.length === 0 && <NoResults />) || (
+          <Results
+            openNowSearch={openNowSearch}
+            setOpenNowSearch={setOpenNowSearch}
+            gridView={gridView}
+            setGridView={setGridView}
+            results={showingResults}
           />
-        </Box>
-        {isLoading ? (
-          <Loading />
-        ) : (
-          (showingResults.length === 0 && <NoResults />) || (
-            <Results
-              gridView={gridView}
-              setGridView={setGridView}
-              results={showingResults}
-            />
-          )
-        )}
-      </Box>
-    </ErrorBoundary>
+        )
+      )}
+    </Box>
   );
 };
