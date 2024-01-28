@@ -2,6 +2,9 @@
 // prettier-ignore
 
 module.exports = {
+  corePlugins: {
+    preflight: false,
+  },
   content: [
     './imports/ui/**/*.{js,jsx,ts,tsx}',
     './imports/ui/**/**/*.{js,jsx,ts,tsx}',
