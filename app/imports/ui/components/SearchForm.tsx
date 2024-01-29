@@ -31,6 +31,7 @@ export const SearchForm = ({ setResultsBySearch, input, setInput }: Props) => (
       fullWidth
     />
     <Button
+      data-cy="search-button"
       variant="contained"
       sx={{
         alignSelf: 'end',

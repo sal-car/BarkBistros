@@ -34,31 +34,37 @@ describe('Searching for restaurants', () => {
 
   it('shows restaurants with matching name', () => {
     cy.get('[data-cy="search-input"]').type('Paws');
+    cy.get('[data-cy="search-button"]').click();
     cy.get('[data-cy="result-item"]').should('contain', 'Paws');
   });
 
   it('shows restaurants with matching address', () => {
     cy.get('[data-cy="search-input"]').type('Tail Lane');
+    cy.get('[data-cy="search-button"]').click();
     cy.get('[data-cy="result-item"]').should('contain', 'Tail Lane');
   });
 
   it('shows restaurants with matching tag', () => {
     cy.get('[data-cy="search-input"]').type('Café');
+    cy.get('[data-cy="search-button"]').click();
     cy.get('[data-cy="result-item"]').should('contain', 'Canine Corner');
   });
 
   it('does not show restaurants with another name', () => {
     cy.get('[data-cy="search-input"]').type('Paws');
+    cy.get('[data-cy="search-button"]').click();
     cy.get('[data-cy="result-item"]').should('not.contain', 'Tail Lane');
   });
 
   it('does not show restaurants with another address', () => {
     cy.get('[data-cy="search-input"]').type('Lick Street');
+    cy.get('[data-cy="search-button"]').click();
     cy.get('[data-cy="result-item"]').should('not.contain', 'Woof Street');
   });
 
   it('does not show restaurants with another tag', () => {
     cy.get('[data-cy="search-input"]').type('Garden');
+    cy.get('[data-cy="search-button"]').click();
     cy.get('[data-cy="result-item"]').should('not.contain', 'Tail Wag Tavern');
   });
 });
