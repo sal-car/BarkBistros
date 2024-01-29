@@ -13,6 +13,19 @@ A simple Meteor project written in TypeScript and React that puts together a lis
 -🔲 Choose between list- and grid-view for a seamless user experience  
 -🔄 Single-page application - no loading times!
 
+## Folder structure
+
+-`db`: contains the pre-loaded data (8 restaurants) and the Restaurant schema.  
+-`server`: main server entry-point, runs the scripts to load the fixtures and run the publications.  
+-`client`: main client entry-point, contains the fonts, main styling, and renders the App.  
+-`imports/startup`: scripts for startup procedure; inserts the fixtures into the Restaurant collection and publishes them so they're available to the client.  
+-`imports/api`: code used by both server and client. Contains the Restaurant Collection connection to Mongo, global interfaces, server and client methods to insert and search for restaurants (POST requests), and the publication to find all restaurants (GET request).  
+-`imports/ui/containers`: Smart components containing the frontend logic; searching for restaurant, filtering them based on opening times, switching between grid/list view.  
+-`imports/ui/components`: Dumb reusable components.  
+-`imports/utils`: Utilities for filtering results based on search and opening times.  
+-`tests`: tests for utilities functions, and in `/cypress`, e2e testing to check the rendering of components and app functionality.  
+-`public`: restaurant images.
+
 ## Getting Started
 
 **NOTE:** BarkBistros runs on Meteor v.2, which uses Node engine v.<=14. If you encounter any issues with running the app, ensure you're using the correct Node version. More information [here for Mac and/or Linux](https://github.com/nvm-sh/nvm) and [here for Windows](https://github.com/coreybutler/nvm-windows)
