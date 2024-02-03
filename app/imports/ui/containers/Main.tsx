@@ -13,14 +13,15 @@ export const Main = () => {
   const [showingResults, setShowingResults] = useState<Restaurant[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [openNowSearch, setOpenNowSearch] = useState<boolean>(false);
-  const [gridView, setGridView] = useState(false);
+  const [gridView, setGridView] = useState<boolean>(false);
 
   // Subscription to restaurants collection.
   const { restaurants, isLoading } = useTracker(() => {
     const handler = Meteor.subscribe('restaurants', {
       onStop: (error: Error) => {
         if (error) {
-          console.log('Error in restaurant subscription: ', error);
+          console.error(`Error in restaurant subscription: ${error}`);
+          return { restaurants: [], isLoading: false };
         }
       },
     });
@@ -36,41 +37,45 @@ export const Main = () => {
       : { restaurants, isLoading: false };
   });
 
-  // Set showing results to restaurants when subscription handler is ready.
-  useEffect(() => {
-    !isLoading && setShowingResults(restaurants);
-  }, [isLoading]);
-
   // If Open now-switch is toggled on,
   // set showing results to restaurants that are open now
   // else, set showingResults to current search term or full list.
   useEffect(() => {
-    if (openNowSearch) {
-      setShowingResults(filterByOpenNow(showingResults));
-    } else if (!openNowSearch && searchTerm != '') {
-      setShowingResults(filterBySearch(restaurants, searchTerm));
-    } else {
-      setShowingResults(restaurants);
-    }
-  }, [openNowSearch]);
+    const updateResults = () => {
+      if (openNowSearch) {
+        setShowingResults(filterByOpenNow(showingResults));
+      } else if (searchTerm != '') {
+        setShowingResults(filterBySearch(restaurants, searchTerm));
+      } else {
+        setShowingResults(restaurants);
+      }
+    };
+
+    !isLoading && updateResults();
+  }, [isLoading, openNowSearch]);
 
   /**
-   * Ses showing results to current search term.
+   * Sets showing results to current search term.
    * @function setResultsBySearch
    * @param {React.FormEvent<HTMLFormElement>} event
    * @returns void
    *  */
   const setResultsBySearch = () => {
-    if (!searchTerm) setShowingResults(restaurants);
+    if (searchTerm === '') {
+      setShowingResults(restaurants);
+      return;
+    }
 
     Meteor.call(
-      'restarants.search',
+      'restaurants.search',
       {
         searchTerm: searchTerm,
       },
-      (err: any, res: any) => {
-        if (err) alert(err.reason);
-        else res && setShowingResults(res);
+      (err: Meteor.Error | undefined, res: Restaurant[] | undefined) => {
+        if (err) {
+          alert('An error ocurred when searching');
+          console.error(err.reason);
+        } else res && setShowingResults(res);
       }
     );
   };
