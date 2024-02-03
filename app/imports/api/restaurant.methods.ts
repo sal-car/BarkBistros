@@ -19,7 +19,7 @@ export async function insertRestaurant(data: Restaurant) {
 }
 
 Meteor.methods({
-  'restarants.search'({ searchTerm }) {
+  'restaurants.search'({ searchTerm }) {
     if (!searchTerm) return RestaurantCollection.find().fetch();
 
     check(searchTerm, String);
