@@ -1,19 +1,21 @@
 import { Meteor } from 'meteor/meteor';
 import { getAllRestaurants } from '../api/restaurant.publications';
+import { winston } from '../../server/logger';
 
 export function runPublications() {
-  try {
-    Meteor.publish('restaurants', function publishRestaurants() {
-      let data = getAllRestaurants();
+  Meteor.publish('restaurants', function publishRestaurants() {
+    try {
+      const data = getAllRestaurants();
 
-      if (!data) {
-        this.error(new Meteor.Error('Error when retrieving data'));
-        throw new Meteor.Error('Error when retrieving data');
-      }
+      if (!data) throw new Error('No data retrieved from getAllRestaurants');
 
+      winston.log('info', 'Publishing restaurants...');
       return data;
-    });
-  } catch (error) {
-    console.error('Error when running publications: ', error);
-  }
+    } catch (error) {
+      winston.log('error', `Error in runPublications: ${error}`);
+      this.error(
+        new Meteor.Error('no-data', 'No data retrieved from getAllRestaurants')
+      );
+    }
+  });
 }

@@ -1,4 +1,5 @@
 import { insertRestaurant } from '../api/restaurant.methods';
+import { winston } from '../../server/logger';
 
 /** 
  * @function loadFixtures
@@ -17,8 +18,8 @@ import { insertRestaurant } from '../api/restaurant.methods';
       throw new Error("There's no data to insert");
     }
   } catch (error) {
-    console.log('Error in loading fixtures: ', error);
-    console.log('Inserting an empty data object....');
+    winston.log('error', `Error in loading fixtures: ${error} `);
+    winston.log('info', 'Inserting an empty data object....');
 
     try {
       const emptyMock = {
@@ -39,11 +40,13 @@ import { insertRestaurant } from '../api/restaurant.methods';
 
       insertRestaurant(emptyMock);
 
+      winston.log('info', 'Insertion of empty data object succeeded');
+
       return { success: true, msg: 'No data available' };
     } catch (error) {
-      console.error(
-        'Error in loading fixtures when trying to insert an empty data object: ',
-        error
+      winston.log(
+        'error',
+        `Error in loading fixtures when trying to insert an empty data object: ${error}`
       );
       return { success: false, msg: error };
     }
