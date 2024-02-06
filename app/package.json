@@ -21,7 +21,6 @@
     "@mui/material": "^5.15.5",
     "@types/winston-loggly-bulk": "^3.0.6",
     "chai": "^5.0.0",
-    "dotenv": "^16.4.1",
     "meteor-node-stubs": "^1.2.7",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
