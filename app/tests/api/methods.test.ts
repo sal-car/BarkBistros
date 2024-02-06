@@ -7,20 +7,34 @@ describe('insertRestaurant', function () {
   beforeEach(async function () {
     // Remove existing records in RestaurantCollection
     await RestaurantCollection.removeAsync({}).catch((error) =>
-      console.error(error)
+      console.error('Error when removing records in collection:', error)
     );
   });
 
-  it('inserts a restaurant in RestaurantCollection and returns its _id', async function () {
+  it('returns a message property containing the _id', async function () {
     const mockRestaurant = mock.restaurant();
-    const resultId = await insertRestaurant(mockRestaurant).catch((err) =>
-      console.error(err)
-    );
+    const result = await insertRestaurant(mockRestaurant);
 
     const foundResult = await RestaurantCollection.findOneAsync({
       name: mockRestaurant.name,
     }).catch((err) => console.error(err));
 
-    expect(resultId).to.equal(foundResult?._id);
+    expect(result.message).to.equal(foundResult?._id);
+  });
+
+  it('returns a status property containing "success"', async function () {
+    const mockRestaurant = mock.restaurant();
+    const result = await insertRestaurant(mockRestaurant);
+
+    expect(result.status).to.equal('success');
+  });
+
+  it('');
+
+  after(async function () {
+    // Remove existing records in RestaurantCollection
+    await RestaurantCollection.removeAsync({}).catch((error) =>
+      console.error('Error when removing records in collection:', error)
+    );
   });
 });

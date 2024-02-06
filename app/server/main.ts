@@ -12,13 +12,7 @@ Meteor.startup(async () => {
 
   if (RestaurantCollection.find().count() === 0) {
     // Prepopulate the db
-    const result = loadFixtures(data);
-
-    if (!result.success)
-      winston.log(
-        'error',
-        `Error while loading fixtures on startup: ${result.msg}`
-      );
+    loadFixtures(data);
   }
 
   // Make data available to client

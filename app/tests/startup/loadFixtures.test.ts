@@ -22,19 +22,15 @@ describe('loadFixtures', function () {
     expect(mockRestaurant.name).to.equal(foundobjectInDB?.name);
   });
 
-  it('returns a success status and message', function () {
+  it('returns a true success boolean', function () {
     const mockRestaurant = mock.restaurant();
     const result = loadFixtures([mockRestaurant]);
 
     expect(result.success).to.be.true;
-    expect(result.msg).to.equal('Inserted data');
   });
 
-  it('tries to insert an empty data object when no data is available', function () {
-    const result = loadFixtures();
-
-    expect(RestaurantCollection.find().count()).to.equal(1);
-    expect(result.success).to.be.true;
-    expect(result.msg).to.equal('No data available');
+  it('returns a false success property if not passed any data', function () {
+    const result = loadFixtures([]);
+    expect(result.success).to.be.false;
   });
 });

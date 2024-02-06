@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import { Restaurant } from '/db/schemas';
 import { RestaurantCollection } from './restaurant.collection';
+import { winston } from '../../server/logger';
 
 /**
  Inserts a new restaurant into the restaurants collection.
@@ -12,10 +13,16 @@ import { RestaurantCollection } from './restaurant.collection';
  @returns {String} - The ID of the inserted restaurant.
  */
 export async function insertRestaurant(data: Restaurant) {
-  Restaurant.validate(data);
-  const result = await RestaurantCollection.insertAsync(data);
+  try {
+    Restaurant.validate(data);
 
-  return result;
+    const result = await RestaurantCollection.insertAsync(data);
+
+    return { status: 'success', message: result };
+  } catch (error) {
+    winston.log('error', `Error when inserting restaurant ${data} : ${error}`);
+    return { status: 'failed', message: error };
+  }
 }
 
 Meteor.methods({
@@ -35,9 +42,13 @@ Meteor.methods({
       }).fetch();
 
       return result;
-    } catch (err) {
+    } catch (error) {
+      winston.log(
+        'error',
+        `Error when searching for restaurants in database: ${error}`
+      );
       throw new Meteor.Error(
-        `Error when searching for restaurants in database: ${err}`,
+        `Error when searching for restaurants in database: ${error}`,
         'Internal server error'
       );
     }

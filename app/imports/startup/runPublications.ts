@@ -9,7 +9,6 @@ export function runPublications() {
 
       if (!data) throw new Error('No data retrieved from getAllRestaurants');
 
-      winston.log('info', 'Publishing restaurants...');
       return data;
     } catch (error) {
       winston.log('error', `Error in runPublications: ${error}`);

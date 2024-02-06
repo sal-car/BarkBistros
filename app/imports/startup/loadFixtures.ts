@@ -8,47 +8,20 @@ import { winston } from '../../server/logger';
 
 */ export function loadFixtures(data?: Restaurant[]) {
   try {
-    if (data && data.length > 0) {
-      data.forEach((item) => {
-        insertRestaurant(item);
+    if (!data || data.length < 1) throw new Error("There's no data to insert");
+    else {
+      data.forEach(async (item) => {
+        const result = await insertRestaurant(item);
+        if (result.status === 'failed')
+          throw new Error(
+            `Insertion of restaurant ${item} failed: ${result.message}`
+          );
       });
-
-      return { success: true, msg: 'Inserted data' };
-    } else {
-      throw new Error("There's no data to insert");
     }
+
+    return { success: true, message: 'Fixtures loaded' };
   } catch (error) {
     winston.log('error', `Error in loading fixtures: ${error} `);
-    winston.log('info', 'Inserting an empty data object....');
-
-    try {
-      const emptyMock = {
-        name: '',
-        address: '',
-        tags: ['', ''],
-        creation_date: new Date(),
-        opening_hours: {
-          monday: '',
-          tuesday: '',
-          wednesday: '',
-          thursday: '',
-          friday: '',
-          saturday: '',
-          sunday: '',
-        },
-      };
-
-      insertRestaurant(emptyMock);
-
-      winston.log('info', 'Insertion of empty data object succeeded');
-
-      return { success: true, msg: 'No data available' };
-    } catch (error) {
-      winston.log(
-        'error',
-        `Error in loading fixtures when trying to insert an empty data object: ${error}`
-      );
-      return { success: false, msg: error };
-    }
+    return { success: false, message: error };
   }
 }

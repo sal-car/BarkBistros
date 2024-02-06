@@ -1,12 +1,10 @@
 import winston from 'winston';
 import { Loggly } from 'winston-loggly-bulk';
-import dotenv from 'dotenv';
-
-dotenv.config();
+import { LOGGLY_TOKEN } from './token';
 
 winston.add(
   new Loggly({
-    token: process.env.LOGGLY_TOKEN as string,
+    token: LOGGLY_TOKEN,
     subdomain: 'salcar',
     tags: ['Meteor', 'BarkBistros'],
     json: true,

@@ -9,7 +9,6 @@ import { winston } from '../../server/logger';
  */
 export function getAllRestaurants() {
   try {
-    winston.log('info', 'Retrieving restaurants from database...');
     const data = RestaurantCollection.find({});
     return data;
   } catch (error) {
