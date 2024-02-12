@@ -11,9 +11,41 @@
     "cypress:headless": "cypress run",
     "test": "meteor test --once --driver-package meteortesting:mocha",
     "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
-    "visualize": "meteor --production --extra-packages bundle-visualizer"
+    "visualize": "meteor --production --extra-packages bundle-visualizer",
+    "lint": "eslint --fix ./**/*",
+    "pretest": "npm run lint --silent"
+  },
+  "eslintConfig": {
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+      "@typescript-eslint"
+    ],
+    "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended",
+      "@meteorjs/eslint-config-meteor"
+    ],
+    "settings": {
+      "import/resolver":  { 
+        "meteor": {
+          "extensions": [".ts", ".tsx", ".js", ".jsx"]
+        }
+      }
+    },
+    "rules": {
+      "linebreak-style": [
+        "error",
+        "windows"
+      ],
+      "no-undef": "off",
+      "semi": [
+        "error",
+        "always"
+      ]
+    }
   },
   "dependencies": {
+    "@babel/eslint-parser": "^7.23.10",
     "@babel/runtime": "^7.23.5",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
@@ -31,15 +63,26 @@
     "winston-loggly-bulk": "^3.3.0"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.5.4",
     "@faker-js/faker": "^8.3.1",
+    "@meteorjs/eslint-config-meteor": "^1.0.5",
     "@types/chai": "^4.3.11",
     "@types/mocha": "^8.2.3",
     "@types/node": "^18.16.5",
     "@types/react": "^18.2.5",
     "@types/react-dom": "^18.2.4",
+    "@typescript-eslint/eslint-plugin": "4.0.0-alpha.16",
+    "@typescript-eslint/parser": "^4.15.0",
     "autoprefixer": "^10.4.17",
     "cross-env": "^7.0.3",
     "cypress": "^13.6.3",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-import-resolver-meteor": "^0.4.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-jsx-a11y": "^6.8.0",
+    "eslint-plugin-meteor": "^7.3.0",
+    "eslint-plugin-react": "^7.33.2",
     "postcss": "^8.4.33",
     "tailwindcss": "^3.4.1",
     "typescript": "^4.9.5"
