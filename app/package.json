@@ -26,13 +26,22 @@
       "@meteorjs/eslint-config-meteor"
     ],
     "settings": {
-      "import/resolver":  { 
+      "import/resolver": {
         "meteor": {
-          "extensions": [".ts", ".tsx", ".js", ".jsx"]
+          "extensions": [
+            ".ts",
+            ".tsx",
+            ".js",
+            ".jsx"
+          ]
         }
       }
     },
     "rules": {
+      "no-use-before-define": "off",
+      "no-console": "off",
+      "consistent-return": "warn",
+      "@typescript-eslint/no-use-before-define": "off",
       "linebreak-style": [
         "error",
         "windows"
@@ -51,6 +60,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.15.5",
     "@mui/material": "^5.15.5",
+    "@types/mongodb": "^4.0.7",
     "@types/winston-loggly-bulk": "^3.0.6",
     "chai": "^5.0.0",
     "meteor-node-stubs": "^1.2.7",
@@ -59,6 +69,7 @@
     "react-error-boundary": "^4.0.12",
     "simpl-schema": "^3.4.1",
     "timemachine": "^0.3.2",
+    "uuid": "^9.0.1",
     "winston": "^3.11.0",
     "winston-loggly-bulk": "^3.3.0"
   },
@@ -71,6 +82,7 @@
     "@types/node": "^18.16.5",
     "@types/react": "^18.2.5",
     "@types/react-dom": "^18.2.4",
+    "@types/uuid": "^9.0.8",
     "@typescript-eslint/eslint-plugin": "4.0.0-alpha.16",
     "@typescript-eslint/parser": "^4.15.0",
     "autoprefixer": "^10.4.17",
