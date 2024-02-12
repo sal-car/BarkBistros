@@ -1,14 +1,12 @@
 import { expect } from 'chai';
-import { insertRestaurant } from '/imports/api/restaurant.methods';
-import { RestaurantCollection } from '/imports/api/restaurant.collection';
-import { mock } from '../mockFactory';
+import insertRestaurant from '/imports/api/restaurant.methods';
+import RestaurantCollection from '/imports/api/restaurant.collection';
+import mock from '../mockFactory';
 
 describe('insertRestaurant', function () {
   beforeEach(async function () {
     // Remove existing records in RestaurantCollection
-    await RestaurantCollection.removeAsync({}).catch((error) =>
-      console.error('Error when removing records in collection:', error)
-    );
+    await RestaurantCollection.removeAsync({}).catch((error) => console.error('Error when removing records in collection:', error));
   });
 
   it('returns a message property containing the _id', async function () {
@@ -17,7 +15,7 @@ describe('insertRestaurant', function () {
 
     const foundResult = await RestaurantCollection.findOneAsync({
       name: mockRestaurant.name,
-    }).catch((err) => console.error(err));
+    }).catch((err: Error) => console.error(err));
 
     expect(result.message).to.equal(foundResult?._id);
   });
@@ -33,8 +31,6 @@ describe('insertRestaurant', function () {
 
   after(async function () {
     // Remove existing records in RestaurantCollection
-    await RestaurantCollection.removeAsync({}).catch((error) =>
-      console.error('Error when removing records in collection:', error)
-    );
+    await RestaurantCollection.removeAsync({}).catch((error) => console.error('Error when removing records in collection:', error));
   });
 });

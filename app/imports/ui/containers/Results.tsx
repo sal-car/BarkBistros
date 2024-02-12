@@ -1,11 +1,11 @@
 import React from 'react';
 import { List, Grid, Box } from '@mui/material';
-import { ToggleView } from '../components/ToggleView';
-import { GridItem } from '../components/GridItem';
-import { ListItem } from '../components/ListItem';
+import ToggleView from '../components/ToggleView';
+import GridItem from '../components/GridItem';
+import ListItem from '../components/ListItem';
 import { getCurrentHourAndDay, isOpen } from '/imports/utils/filterRestaurants';
 import { imgMap } from '/db/fixtures';
-import { FilterOptions } from '../components/FilterOptions';
+import FilterOptions from '../components/FilterOptions';
 
 type Props = {
   gridView: boolean;
@@ -15,28 +15,33 @@ type Props = {
   setOpenNowSearch: (openNow: boolean) => void;
 };
 
-export const Results = ({
+function Results({
   results,
   gridView,
   setGridView,
   openNowSearch,
   setOpenNowSearch,
-}: Props) => {
+}: Props): React.JSX.Element {
   /**
    * Checks if the venue is open based on opening hours and system's current time.
    * @function checkIfVenueIsOpen
    * @param {opening_hours} OpeningHours
    * @returns {boolean} true/false
    *  */
-  const checkIfVenueIsOpen = (opening_hours: OpeningHours) => {
+  const checkIfVenueIsOpen = (OpeningHours: OpeningHours) => {
     const { day, hour } = getCurrentHourAndDay();
-    return isOpen(hour, opening_hours[day]);
+    return isOpen(hour, OpeningHours[day]);
   };
 
   return (
     <Box data-cy="result-list" className="flex-col flex">
       <Box
-        sx={{ display: 'flex', justifyContent: 'space-between', px: 2, pb: 2 }}
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          px: 2,
+          pb: 2,
+        }}
       >
         <ToggleView
           cardView={gridView}
@@ -50,9 +55,9 @@ export const Results = ({
 
       {gridView ? (
         <Grid container spacing={3} className="px-3">
-          {results.map((item, index) => (
+          {results.map((item) => (
             <GridItem
-              key={index}
+              key={item._id}
               name={item.name}
               address={item.address}
               img={imgMap[item.name]}
@@ -62,10 +67,10 @@ export const Results = ({
         </Grid>
       ) : (
         <List>
-          {results?.map((item, index) => (
+          {results?.map((item) => (
             <ListItem
-              key={index}
-              open={checkIfVenueIsOpen(item.opening_hours)}
+              key={item._id}
+              open={checkIfVenueIsOpen(item.openingHours)}
               name={item.name}
               address={item.address}
               img={imgMap[item.name]}
@@ -76,4 +81,6 @@ export const Results = ({
       )}
     </Box>
   );
-};
+}
+
+export default Results;

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import { expect } from 'chai';
 import timemachine from 'timemachine';
 import {
@@ -6,7 +7,7 @@ import {
   getCurrentHourAndDay,
   isOpen,
 } from '/imports/utils/filterRestaurants';
-import { mock } from '../mockFactory';
+import mock from '../mockFactory';
 
 describe('extractStartAndEndHours', function () {
   it('correctly extracts start hour and end hour from a valid string', function () {
@@ -75,7 +76,7 @@ describe('getCurrentHourAndDay', function () {
 
     // Check that it works as expected
     expect(new Date(expectedDate).toISOString()).to.equal(
-      new Date().toISOString()
+      new Date().toISOString(),
     );
   });
 
@@ -102,7 +103,7 @@ describe('filterByOpenNow', function () {
 
     // Check that it works as expected
     expect(new Date(expectedDate).toISOString()).to.equal(
-      new Date().toISOString()
+      new Date().toISOString(),
     );
 
     // Mock restaurants

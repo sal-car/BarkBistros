@@ -8,8 +8,12 @@ type Props = {
   cardView: boolean;
 };
 
-export const ToggleView = ({ onClick, cardView }: Props) => (
-  <IconButton onClick={onClick}>
-    {cardView ? <ViewListIcon /> : <ViewModuleIcon />}
-  </IconButton>
-);
+function ToggleView({ onClick, cardView }: Props): React.JSX.Element {
+  return (
+    <IconButton onClick={onClick}>
+      {cardView ? <ViewListIcon /> : <ViewModuleIcon />}
+    </IconButton>
+  );
+}
+
+export default ToggleView;

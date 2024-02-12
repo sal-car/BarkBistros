@@ -9,6 +9,7 @@ import {
   Theme,
 } from '@mui/material';
 import CircleIcon from '@mui/icons-material/Circle';
+import { v4 as uuidv4 } from 'uuid';
 
 type Props = {
   name: string;
@@ -18,11 +19,17 @@ type Props = {
   open: boolean;
 };
 
-export function ListItem({ name, img, address, tags, open }: Props) {
+function ListItem({
+  name,
+  img,
+  address,
+  tags,
+  open,
+}: Props): React.JSX.Element {
   const matches = useMediaQuery((theme: Theme) => theme.breakpoints.up('sm'));
 
   return (
-    <ListItemButton data-cy={'result-item'}>
+    <ListItemButton data-cy="result-item">
       <ListItemAvatar>
         <Avatar src={`${img}.jpg`} alt={`picture of restaurant ${name}`} />
       </ListItemAvatar>
@@ -35,18 +42,19 @@ export function ListItem({ name, img, address, tags, open }: Props) {
         secondary={address}
       />
       {tags.map(
-        (tag: string, index: number) =>
-          (matches || index === 0) && (
-            <Chip
-              key={index}
-              className="ml-1 mr-2"
-              sx={{ maxWidth: { xs: 80, sm: 200 } }}
-              label={tag}
-            />
-          )
+        (tag: string, index: number) => (matches || index === 0) && (
+        <Chip
+          key={uuidv4()}
+          className="ml-1 mr-2"
+          sx={{ maxWidth: { xs: 80, sm: 200 } }}
+          label={tag}
+        />
+        ),
       )}
       <h1>{matches}</h1>
       <CircleIcon color={open ? 'success' : 'error'} />
     </ListItemButton>
   );
 }
+
+export default ListItem;

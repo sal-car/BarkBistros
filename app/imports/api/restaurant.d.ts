@@ -1,13 +1,4 @@
 declare global {
-  interface Restaurant {
-    _id?: string;
-    name: string;
-    address: string;
-    tags: string[];
-    creation_date: Date;
-    opening_hours: OpeningHours;
-  }
-
   interface OpeningHours {
     monday: string;
     tuesday: string;
@@ -17,6 +8,14 @@ declare global {
     saturday: string;
     sunday: string;
     [key: string]: string;
+  }
+  interface Restaurant {
+    _id?: string;
+    name: string;
+    address: string;
+    tags: string[];
+    creationDate: Date;
+    openingHours: OpeningHours;
   }
 }
 

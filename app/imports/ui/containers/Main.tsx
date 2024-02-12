@@ -1,41 +1,51 @@
+/* eslint-disable no-alert */
 import { Meteor } from 'meteor/meteor';
 import React, { useEffect, useState } from 'react';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Box } from '@mui/material';
-import { RestaurantCollection } from '/imports/api/restaurant.collection';
+import RestaurantCollection from '/imports/api/restaurant.collection';
 import { filterBySearch, filterByOpenNow } from '../../utils/filterRestaurants';
-import { SearchForm } from '../components/SearchForm';
-import { Loading } from '../components/Loading';
-import { NoResults } from '../components/NoResults';
-import { Results } from './Results';
+import SearchForm from '../components/SearchForm';
+import Loading from '../components/Loading';
+import NoResults from '../components/NoResults';
+import Results from './Results';
 
-export const Main = () => {
+function Main(): React.JSX.Element {
   const [showingResults, setShowingResults] = useState<Restaurant[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [openNowSearch, setOpenNowSearch] = useState<boolean>(false);
   const [gridView, setGridView] = useState<boolean>(false);
 
   // Subscription to restaurants collection.
-  const { restaurants, isLoading } = useTracker(() => {
-    const handler = Meteor.subscribe('restaurants', {
-      onStop: (error: Error) => {
-        if (error) {
-          console.error(`Error in restaurant subscription: ${error}`);
-          return { restaurants: [], isLoading: false };
-        }
-      },
-    });
+  type Data = {
+    restaurants: Restaurant[],
+    isLoading: boolean
+  }
 
-    if (!handler.ready()) {
-      return { restaurants: [], isLoading: true };
-    }
+  const { restaurants, isLoading } = useTracker<{
+    restaurants: Restaurant[], isLoading: boolean
+  }>(
+    ():Data => {
+      const handler = Meteor.subscribe('restaurants', {
+        onStop: (error: Error): Data | void => {
+          if (error) {
+            console.error(`Error in restaurant subscription: ${error}`);
+            return { restaurants: [], isLoading: false };
+          }
+        },
+      });
 
-    const restaurants = RestaurantCollection.find({}).fetch();
+      if (!handler.ready()) {
+        return { restaurants: [], isLoading: true };
+      }
 
-    return restaurants.length <= 1
-      ? { restaurants: [], isLoading: false }
-      : { restaurants, isLoading: false };
-  });
+      const data = RestaurantCollection.find({}).fetch();
+
+      return data.length <= 1
+        ? { restaurants: [], isLoading: false }
+        : { restaurants: data, isLoading: false };
+    },
+  );
 
   // If Open now-switch is toggled on,
   // set showing results to restaurants that are open now
@@ -44,14 +54,14 @@ export const Main = () => {
     const updateResults = () => {
       if (openNowSearch) {
         setShowingResults(filterByOpenNow(showingResults));
-      } else if (searchTerm != '') {
+      } else if (searchTerm !== '') {
         setShowingResults(filterBySearch(restaurants, searchTerm));
       } else {
         setShowingResults(restaurants);
       }
     };
 
-    !isLoading && updateResults();
+    if (!isLoading) updateResults();
   }, [isLoading, openNowSearch]);
 
   /**
@@ -69,14 +79,14 @@ export const Main = () => {
     Meteor.call(
       'restaurants.search',
       {
-        searchTerm: searchTerm,
+        searchTerm,
       },
       (err: Meteor.Error | undefined, res: Restaurant[] | undefined) => {
         if (err) {
           alert('An error ocurred when searching');
           console.error(err.reason);
-        } else res && setShowingResults(res);
-      }
+        } else if (res) setShowingResults(res);
+      },
     );
   };
 
@@ -110,4 +120,6 @@ export const Main = () => {
       )}
     </Box>
   );
-};
+}
+
+export default Main;

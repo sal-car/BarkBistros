@@ -1,8 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
-import { Restaurant } from '/db/schemas';
-import { RestaurantCollection } from './restaurant.collection';
-import { winston } from '../../server/logger';
+import Restaurant from '/db/schemas';
+import RestaurantCollection from './restaurant.collection';
+import winston from '../../server/logger';
 
 /**
  Inserts a new restaurant into the restaurants collection.
@@ -10,9 +10,9 @@ import { winston } from '../../server/logger';
  @async
  @function insertRestaurant
  @param {Object} data - The restaurant data.
- @returns {String} - The ID of the inserted restaurant.
+ @returns {Object} - status: 'failed' || 'success', message: restaurant ID || error message.
  */
-export async function insertRestaurant(data: Restaurant) {
+async function insertRestaurant(data: Restaurant): Promise<dbMethodsData> {
   try {
     Restaurant.validate(data);
 
@@ -21,7 +21,10 @@ export async function insertRestaurant(data: Restaurant) {
     return { status: 'success', message: result };
   } catch (error) {
     winston.log('error', `Error when inserting restaurant ${data} : ${error}`);
-    return { status: 'failed', message: error };
+    if (error instanceof Error) {
+      return { status: 'failed', message: error.message };
+    }
+    return { status: 'failed', message: 'Unknown server error' };
   }
 }
 
@@ -45,12 +48,14 @@ Meteor.methods({
     } catch (error) {
       winston.log(
         'error',
-        `Error when searching for restaurants in database: ${error}`
+        `Error when searching for restaurants in database: ${error}`,
       );
       throw new Meteor.Error(
         `Error when searching for restaurants in database: ${error}`,
-        'Internal server error'
+        'Internal server error',
       );
     }
   },
 });
+
+export default insertRestaurant;

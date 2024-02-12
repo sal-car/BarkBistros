@@ -8,6 +8,7 @@ import {
   Box,
   Chip,
 } from '@mui/material';
+import { v4 as uuidv4 } from 'uuid';
 
 type Props = {
   name: string;
@@ -16,9 +17,11 @@ type Props = {
   tags: string[];
 };
 
-export function GridItem({ name, img, address, tags }: Props) {
+function GridItem({
+  name, img, address, tags,
+}: Props): React.JSX.Element {
   return (
-    <Grid item data-cy={'result-item'} xs={12} sm={6} md={4} lg={3}>
+    <Grid item data-cy="result-item" xs={12} sm={6} md={4} lg={3}>
       <Card
         sx={{
           height: { xs: 'fit', sm: '100%' },
@@ -32,7 +35,7 @@ export function GridItem({ name, img, address, tags }: Props) {
           sx={{ minHeight: 180, width: '100%', objectFit: 'cover' }}
           src={`${img}.jpg`}
           alt={`picture of restaurant ${name}`}
-        ></CardMedia>
+        />
         <CardContent
           sx={{
             height: '100%',
@@ -50,8 +53,8 @@ export function GridItem({ name, img, address, tags }: Props) {
             </Typography>
           </Box>
           <Box>
-            {tags.map((tag, index) => (
-              <Chip key={index} className="mt-3 mr-2 " label={tag} />
+            {tags.map((tag: string) => (
+              <Chip key={uuidv4()} className="mt-3 mr-2 " label={tag} />
             ))}
           </Box>
         </CardContent>
@@ -59,3 +62,5 @@ export function GridItem({ name, img, address, tags }: Props) {
     </Grid>
   );
 }
+
+export default GridItem;

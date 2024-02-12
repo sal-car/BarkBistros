@@ -1,9 +1,13 @@
 import { Meteor } from 'meteor/meteor';
-import { getAllRestaurants } from '../api/restaurant.publications';
-import { winston } from '../../server/logger';
+import { Mongo } from 'meteor/mongo';
+import getAllRestaurants from '../api/restaurant.publications';
+import winston from '../../server/logger';
 
-export function runPublications() {
-  Meteor.publish('restaurants', function publishRestaurants() {
+function runPublications(): void {
+  Meteor.publish('restaurants', function publishRestaurants(): Mongo.Cursor<
+    Restaurant,
+    Restaurant
+  > | void {
     try {
       const data = getAllRestaurants();
 
@@ -13,8 +17,10 @@ export function runPublications() {
     } catch (error) {
       winston.log('error', `Error in runPublications: ${error}`);
       this.error(
-        new Meteor.Error('no-data', 'No data retrieved from getAllRestaurants')
+        new Meteor.Error('no-data', 'No data retrieved from getAllRestaurants'),
       );
     }
   });
 }
+
+export default runPublications;

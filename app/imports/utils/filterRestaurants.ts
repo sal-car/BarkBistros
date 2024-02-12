@@ -8,7 +8,7 @@
  */
 export const filterBySearch = (
   restaurants: Restaurant[],
-  searchTerm: string
+  searchTerm: string,
 ): Restaurant[] | [] => {
   if (!searchTerm) return restaurants;
 
@@ -18,9 +18,7 @@ export const filterBySearch = (
     const { name, address, tags } = restaurant;
     const isNameMatch = name.toLowerCase().includes(normalizedSearchTerm);
     const isAddressMatch = address.toLowerCase().includes(normalizedSearchTerm);
-    const isTagMatch = tags.some((tag) =>
-      tag.toLowerCase().includes(normalizedSearchTerm)
-    );
+    const isTagMatch = tags.some((tag) => tag.toLowerCase().includes(normalizedSearchTerm));
 
     return isNameMatch || isAddressMatch || isTagMatch;
   });
@@ -34,12 +32,12 @@ export const filterBySearch = (
  * @returns {Restaurant[] | []} - Filtered array of restaurants or an empty array.
  */
 export const filterByOpenNow = (
-  restaurants: Restaurant[]
+  restaurants: Restaurant[],
 ): Restaurant[] | [] => {
   const { day, hour } = getCurrentHourAndDay();
 
   const restaurantsOpenNow = restaurants.filter((restaurant) => {
-    const openingHours = restaurant.opening_hours as OpeningHours;
+    const openingHours = restaurant.openingHours as OpeningHours;
     return isOpen(hour, openingHours[day]);
   });
 
@@ -52,7 +50,11 @@ export const filterByOpenNow = (
  *
  * @returns {{day: string, hour: number}} - Object containing current weekday and hour.
  */
-export const getCurrentHourAndDay = () => {
+type CurrentHourDay = {
+  day: string,
+  hour: number
+}
+export const getCurrentHourAndDay = ():CurrentHourDay => {
   const daysOfTheWeek: { [key: number]: string } = {
     0: 'sunday',
     1: 'monday',
@@ -76,7 +78,7 @@ export const getCurrentHourAndDay = () => {
  * @param {string} openingHours - String representation of opening hours.
  * @returns {boolean} - True if the restaurant is open at the current hour, false otherwise.
  */
-export const isOpen = (thisHour: number, openingHours: string) => {
+export const isOpen = (thisHour: number, openingHours: string): boolean => {
   try {
     const { startHour, endHour } = extractStartAndEndHours(openingHours);
     return !!(startHour <= thisHour && thisHour < endHour);
@@ -94,18 +96,22 @@ export const isOpen = (thisHour: number, openingHours: string) => {
  * @returns {{startHour: number, endHour: number}} - Object containing start and end hours.
  * @throws {Error} - Throws an error if the input string is not in valid HH:MM-HH:MM format.
  */
-export const extractStartAndEndHours = (times: string) => {
-  const validInput = new RegExp(
-    '^(?:[0-1]\\d|[2][0-4])[:][0-6][0-9][-](?:[0-1]\\d|[2][0-4])[:][0-6][0-9]'
-  );
+type StartEndHours = {
+  startHour: number,
+  endHour: number
+}
+export const extractStartAndEndHours = (times: string): StartEndHours => {
+  // eslint-disable-next-line prefer-regex-literals
+  const validInput = new RegExp('^(?:[0-1]\\d|[2][0-4])[:][0-6][0-9][-](?:[0-1]\\d|[2][0-4])[:][0-6][0-9]');
 
-  if (validInput.test(times) === false)
+  if (validInput.test(times) === false) {
     throw new Error(
-      `Error parsing string, input is not valid HH:MM-HH:MM format`
+      'Error parsing string, input is not valid HH:MM-HH:MM format',
     );
+  }
 
   const [startHour, endHour] = times
     .split('-')
-    .map((time) => parseInt(time.split(':')[0]));
+    .map((time) => parseInt(time.split(':')[0], 10));
   return { startHour, endHour };
 };

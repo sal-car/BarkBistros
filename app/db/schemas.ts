@@ -31,7 +31,7 @@ const OpeningHours = new SimpleSchema({
   },
 });
 
-export const Restaurant = new SimpleSchema({
+const Restaurant = new SimpleSchema({
   name: {
     type: String,
     optional: false,
@@ -48,12 +48,14 @@ export const Restaurant = new SimpleSchema({
     type: String,
     optional: false,
   },
-  creation_date: {
+  creationDate: {
     type: Date,
     optional: false,
   },
-  opening_hours: {
+  openingHours: {
     type: OpeningHours,
     optional: false,
   },
 });
+
+export default Restaurant;

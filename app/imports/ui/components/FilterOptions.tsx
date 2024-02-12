@@ -5,15 +5,22 @@ type Props = {
   openNowSearch: boolean;
   setOpenNowSearch: (openNow: boolean) => void;
 };
-export const FilterOptions = ({ openNowSearch, setOpenNowSearch }: Props) => (
-  <FormControlLabel
-    control={
-      <Switch
-        onChange={() => setOpenNowSearch(!openNowSearch)}
-        color="success"
-      ></Switch>
-    }
-    label="Open now"
-    labelPlacement="start"
-  />
-);
+function FilterOptions({
+  openNowSearch,
+  setOpenNowSearch,
+}: Props): React.JSX.Element {
+  return (
+    <FormControlLabel
+      control={(
+        <Switch
+          onChange={() => setOpenNowSearch(!openNowSearch)}
+          color="success"
+        />
+      )}
+      label="Open now"
+      labelPlacement="start"
+    />
+  );
+}
+
+export default FilterOptions;

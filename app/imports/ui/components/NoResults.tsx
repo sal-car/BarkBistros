@@ -1,5 +1,7 @@
 import React from 'react';
 
-export const NoResults = () => (
-  <p className="self-center">No results to show 😢</p>
-);
+function NoResults(): React.JSX.Element {
+  return <p className="self-center">No results to show 😢</p>;
+}
+
+export default NoResults;
